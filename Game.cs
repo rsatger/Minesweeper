@@ -8,8 +8,6 @@ namespace Minesweeper
 {
     public class Game
     {
-
-
         private int numCol, numRow;
 
         // store true if cell contains mine

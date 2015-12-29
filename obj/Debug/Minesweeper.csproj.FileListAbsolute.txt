@@ -1,5 +1,6 @@
 E:\Projects\rsatger\perso\Minesweeper\Minesweeper\bin\Debug\Minesweeper.exe.config
 E:\Projects\rsatger\perso\Minesweeper\Minesweeper\bin\Debug\Minesweeper.exe
 E:\Projects\rsatger\perso\Minesweeper\Minesweeper\bin\Debug\Minesweeper.pdb
+E:\Projects\rsatger\perso\Minesweeper\Minesweeper\obj\Debug\Minesweeper.csprojResolveAssemblyReference.cache
 E:\Projects\rsatger\perso\Minesweeper\Minesweeper\obj\Debug\Minesweeper.exe
 E:\Projects\rsatger\perso\Minesweeper\Minesweeper\obj\Debug\Minesweeper.pdb

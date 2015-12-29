@@ -33,8 +33,9 @@ namespace Minesweeper
 
 
 
-            Console.WriteLine("Press any key to exit");
+            Console.WriteLine("Press key to exit");
             Console.ReadKey();
+            // test
 
 
 

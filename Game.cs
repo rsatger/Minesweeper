@@ -93,8 +93,13 @@ namespace Minesweeper
 
             Console.WriteLine();
 
-            // reveal the cell selected by user
-            Reveal(row - 1, col - 1);
+            if (game[row-1, col-1] == -1) // if cell hidden
+            {
+                // reveal the cell selected by user
+                Reveal(row - 1, col - 1);
+            }
+            else Console.WriteLine("This cell has already been cleared"); // get this out of method
+            Console.WriteLine();
 
             // display updated game board
             Draw();
@@ -104,50 +109,43 @@ namespace Minesweeper
         // reveal the cell selected by user
         public void Reveal(int row, int col)
         {
-
-            if (game[row, col] == -1) // if cell hidden
+            if (mine[row, col]) // if cell contains a mine
             {
-                if (mine[row, col]) // if cell contains a mine
-                {
-                    game[row, col] = -2;
+                game[row, col] = -2;
 
-                    Console.Write("GameOver"); // move this somewhere else ? Check when calling Draw ? Create event ?
-                    gameOver = true;
+                Console.Write("GameOver"); // move this somewhere else ? Check when calling Draw ? Create event ?
+                gameOver = true;
+            }
+            else // if cell does not contain a mine
+            {
+                int count = 0;
+
+                for (int i = Math.Max(row - 1, 0); i <= Math.Min(row + 1, numRow - 1); i++) 
+                {
+                    for (int j = Math.Max(col - 1, 0); j <= Math.Min(col + 1, numCol - 1); j++)
+                    {
+                        if (mine[i, j])
+                        {
+                            count++; // count number of neighbooring mines
+                        }
+                    }
                 }
-                else // if cell does not contain a mine
-                {
-                    int count = 0;
 
-                    for (int i = Math.Max(row - 1, 0); i <= Math.Min(row + 1, numRow - 1); i++) 
+                game[row, col] = count; // update board array with number of neighbooring mines
+                cellsRevealed++; // update number of cell 
+
+                if (count == 0) // if cell has no neighbooring mines, reveal neighoor cells, and so on 
+                {
+                    for (int i = Math.Max(row - 1, 0); i <= Math.Min(row + 1, numRow - 1); i++)
                     {
                         for (int j = Math.Max(col - 1, 0); j <= Math.Min(col + 1, numCol - 1); j++)
                         {
-                            if (mine[i, j])
-                            {
-                                count++; // count number of neighbooring mines
-                            }
+                            Reveal(i, j);
                         }
                     }
-
-                    game[row, col] = count; // update board array with number of neighbooring mines
-                    cellsRevealed++; // update number of cell 
-
-                    if (count == 0) // if cell has no neighbooring mines, reveal neighoor cells, and so on 
-                    {
-                        for (int i = Math.Max(row - 1, 0); i <= Math.Min(row + 1, numRow - 1); i++)
-                        {
-                            for (int j = Math.Max(col - 1, 0); j <= Math.Min(col + 1, numCol - 1); j++)
-                            {
-                                Reveal(i, j);
-                            }
-                        }
-                    }
-
                 }
-
-
             }
-            // else Console.WriteLine("This cell has already been cleared"); // get this out of method
+            
 
         }
 

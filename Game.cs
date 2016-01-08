@@ -1,50 +1,49 @@
 ﻿using System;
-using System.Data;
 
 namespace Minesweeper
 {
     public class Game
     {
-        public int _numCol;
- 
-        public int _numRow;
+        public int NumCol;
+
+        public int NumRow;
 
         public Cell[,] game;
 
         public int CellsRevealed;
 
-        public bool gameOver; // to use
+        public bool GameOver; // to use
 
         public Game()
         {
-            _numCol = 10;
+            NumCol = 10;
+            NumRow = 10;
+            GameOver = false;
 
-            _numRow = 10;
+            game = new Cell[NumRow, NumCol];
+            var mines = InitializeMines(NumRow, NumCol);
 
-            game = new Cell[_numRow, _numCol];
-            // clean Cell table
-            for (int i = 0; i < _numRow; i++)
-                for (int j = 0; j < _numCol; j++)
+            for (int row = 0; row < NumRow; row++)
+                for (int col = 0; col < NumCol; col++)
                 {
-                    game[i, j] = new Cell(i, j);
+                    game[row, col] = new Cell(row, col, mines[row, col]);
                 }
+        }
 
-            //cellsRevealed = 0;
-
-            gameOver = false;
-
-            // to do: use randomization 
-            // 10 mines locations
-            game[3, 1].CellState = CellStates.HiddenMine;
-            game[1, 2].CellState = CellStates.HiddenMine;
-            game[6, 2].CellState = CellStates.HiddenMine;
-            game[6, 8].CellState = CellStates.HiddenMine;
-            game[9, 9].CellState = CellStates.HiddenMine;
-            game[4, 6].CellState = CellStates.HiddenMine;
-            game[9, 2].CellState = CellStates.HiddenMine;
-            game[6, 1].CellState = CellStates.HiddenMine;
-            game[2, 7].CellState = CellStates.HiddenMine;
-            game[9, 7].CellState = CellStates.HiddenMine;
+        private static bool[,] InitializeMines(int maxRow, int maxCol)
+        {
+            var mines = new bool[maxRow, maxCol];
+            mines[3, 1] = true;
+            mines[1, 2] = true;
+            mines[6, 2] = true;
+            mines[6, 8] = true;
+            mines[9, 9] = true;
+            mines[4, 6] = true;
+            mines[9, 2] = true;
+            mines[6, 1] = true;
+            mines[2, 7] = true;
+            mines[9, 7] = true;
+            return mines;
         }
 
         public void Play()
@@ -68,18 +67,15 @@ namespace Minesweeper
 
             Console.WriteLine();
 
-            if (!game[row - 1, col - 1].IsRevealed)
+            if (game[row - 1, col - 1].Visibility != CellVisibility.Revealed)
             {
                 game[row - 1, col - 1].Reveal(this);
-
             }
-
-            else Console.WriteLine("This cell has already been cleared"); 
+            else Console.WriteLine("This cell has already been cleared");
             Console.WriteLine();
 
             Draw();
         }
-
 
         public void Draw()
         {
@@ -87,26 +83,27 @@ namespace Minesweeper
 
             Console.WriteLine();
 
-            for (int i = 0; i < _numRow; i++)
+            for (int row = 0; row < NumRow; row++)
             {
-                if (i + 1 < 10) Console.Write(i + 1 + "  ");
-                else Console.Write(i + 1 + " ");
+                if (row + 1 < 10) Console.Write(row + 1 + "  ");
+                else Console.Write(row + 1 + " ");
 
-                for (int j = 0; j < _numCol; j++)
+                for (int col = 0; col < NumCol; col++)
                 {
-                    switch (game[i, j].CellState)
+                    if (game[row, col].Visibility == CellVisibility.Revealed)
                     {
-                        case CellStates.RevealedSafe:
-                            Console.Write(game[i, j]._minesAround + " ");
-                            break;
-
-                        case CellStates.RevealedMine:
-                            Console.Write("M ");
-                            break;
-
-                        default:
-                            Console.Write("- ");
-                            break;
+                        if (game[row, col].IsMine)
+                        {
+                            Console.Write("M "); 
+                        }
+                        else
+                        {
+                            Console.Write(game[row, col].MinesAround + " ");
+                        }
+                    }
+                    else
+                    {
+                        Console.Write("- ");
                     }
                 }
                 Console.WriteLine();

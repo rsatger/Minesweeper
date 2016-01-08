@@ -1,10 +1,8 @@
 namespace Minesweeper
 {
-    public enum CellStates
+    public enum CellVisibility
     {
-        HiddenSafe,
-        HiddenMine,
-        RevealedSafe,
-        RevealedMine
+        Hidden,
+        Revealed,
     }
 }

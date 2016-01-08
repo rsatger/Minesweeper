@@ -4,63 +4,52 @@ namespace Minesweeper
 {
     public class Cell
     {
-        private int _row, _col;
-        
-        public int _minesAround;
+        private readonly int _row;
+        private readonly int _col;
+        public bool IsMine { get; private set; }
 
-        public CellStates CellState { get; set; } 
+        public int MinesAround;
+        public CellVisibility Visibility { get; set; }
 
-        public bool IsRevealed 
+        public Cell(int row, int col, bool isMine)
         {
-            get { return CellState == CellStates.RevealedMine || CellState == CellStates.RevealedSafe; }
-            set { } 
-        }
-
-        public bool ContainsMine
-        {
-            get { return CellState == CellStates.HiddenMine || CellState == CellStates.RevealedMine; }
-            set { }
-        }
-
-        public Cell(int row, int col)
-        {
-            _minesAround = 0;
+            MinesAround = 0;
             _row = row;
             _col = col;
-            CellState = CellStates.HiddenSafe;
+            Visibility = CellVisibility.Hidden;
+            IsMine = isMine;
         }
 
         public void Reveal(Game board)
         {
-            if (ContainsMine)
+            if (IsMine)
             {
-                CellState = CellStates.RevealedMine;
+                Visibility = CellVisibility.Revealed;
             }
             else
             {
-                for (int i = Math.Max(_row - 1, 0); i <= Math.Min(_row + 1, 10 - 1); i++)
+                for (int rowIndex = Math.Max(_row - 1, 0); rowIndex <= Math.Min(_row + 1, board.NumRow - 1); rowIndex++)
                 {
-                    for (int j = Math.Max(_col - 1, 0); j <= Math.Min(_col + 1, 10 - 1); j++)
+                    for (int columnIndex = Math.Max(_col - 1, 0); columnIndex <= Math.Min(_col + 1, board.NumCol - 1); columnIndex++)
                     {
-                        if (board.game[i, j].ContainsMine)
+                        if (board.game[rowIndex, columnIndex].IsMine)
                         {
-                            _minesAround++; 
+                            MinesAround++;
                         }
                     }
                 }
 
-                if (_minesAround == 0 )
-
+                if (MinesAround == 0)
                 {
-                    for (int i = Math.Max(_row - 1, 0); i <= Math.Min(_row + 1, 10 - 1); i++)
+                    for (int rowIndex = Math.Max(_row - 1, 0); rowIndex <= Math.Min(_row + 1, board.NumRow - 1); rowIndex++)
                     {
-                        for (int j = Math.Max(_col - 1, 0); j <= Math.Min(_col + 1, 10 - 1); j++)
+                        for (int columnIndex = Math.Max(_col - 1, 0); columnIndex <= Math.Min(_col + 1, board.NumCol - 1); columnIndex++)
                         {
-                            board.game[i, j].Reveal(board);
+                            board.game[rowIndex, columnIndex].Reveal(board);
                         }
                     }
                 }
-                CellState = CellStates.RevealedSafe;
+                Visibility = CellVisibility.Revealed;
             }
         }
     }

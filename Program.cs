@@ -20,14 +20,14 @@ namespace Minesweeper
 
             game.Draw();
 
-            while (!game.gameOver && game.cellsRevealed < 90) // while 
+            while (!game.gameOver ) //&& game.cellsRevealed < 90) // while 
             {
                 game.Play();
             }
 
             if (game.gameOver) Console.WriteLine("GameOver");
 
-            if (game.cellsRevealed == 90) Console.WriteLine("You won !");
+            //if (game.cellsRevealed == 90) Console.WriteLine("You won !");
 
             //game.Draw();
 

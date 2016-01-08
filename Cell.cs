@@ -20,7 +20,7 @@ namespace Minesweeper
             IsMine = isMine;
         }
 
-        public void Reveal(Game board)
+        public void Reveal(Board board)
         {
             if (IsMine)
             {
@@ -32,7 +32,7 @@ namespace Minesweeper
                 {
                     for (int columnIndex = Math.Max(_col - 1, 0); columnIndex <= Math.Min(_col + 1, board.NumCol - 1); columnIndex++)
                     {
-                        if (board.game[rowIndex, columnIndex].IsMine)
+                        if (board.Cells[rowIndex, columnIndex].IsMine)
                         {
                             MinesAround++;
                         }
@@ -45,7 +45,7 @@ namespace Minesweeper
                     {
                         for (int columnIndex = Math.Max(_col - 1, 0); columnIndex <= Math.Min(_col + 1, board.NumCol - 1); columnIndex++)
                         {
-                            board.game[rowIndex, columnIndex].Reveal(board);
+                            board.Cells[rowIndex, columnIndex].Reveal(board);
                         }
                     }
                 }

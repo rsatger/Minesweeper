@@ -46,7 +46,7 @@
   <ItemGroup>
     <Compile Include="Cell.cs" />
     <Compile Include="CellStates.cs" />
-    <Compile Include="Game.cs" />
+    <Compile Include="Board.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

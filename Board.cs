@@ -104,7 +104,8 @@ namespace Minesweeper
             {
                 for (int columnIndex = Math.Max(cell._col - 1, 0); columnIndex <= Math.Min(cell._col + 1, NumCol - 1); columnIndex++)
                 {
-                    if (Cells[rowIndex, columnIndex].MinesAround == 0)
+                    
+                    if (Cells[rowIndex, columnIndex].Visibility != CellVisibility.Revealed && Cells[rowIndex, columnIndex].MinesAround == 0)
                     {
                         Cells[rowIndex, columnIndex].Visibility = CellVisibility.Revealed;
                         PropagateReveal(Cells[rowIndex, columnIndex]);

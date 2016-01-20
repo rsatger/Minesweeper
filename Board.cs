@@ -30,7 +30,7 @@ namespace Minesweeper
                     game[row, col] = new Cell(row, col, mines[row, col]);
                 }
 
-            InitializeMinesAround();
+            InitializeMinesAround(game);
             return game;
         }
 
@@ -50,26 +50,26 @@ namespace Minesweeper
             return mines;
         }
 
-        private void InitializeMinesAround()
+        private void InitializeMinesAround(Cell[,] game)
         {
             for (int rowIndex = 0; rowIndex <= NumRow - 1; rowIndex++)
             {
-                for (int columnIndex = 0;columnIndex <= NumCol - 1;columnIndex++)
+                for (int columnIndex = 0;columnIndex <= NumCol - 1; columnIndex++)
                 {
-                    SetMinesAround(rowIndex, columnIndex);
+                    SetMinesAround(rowIndex, columnIndex, game);
                 }
             }
         }
 
-        private void SetMinesAround(int _row, int _col)
+        private void SetMinesAround(int _row, int _col, Cell[,] game)
         {
             for (int rowIndex = Math.Max(_row - 1, 0); rowIndex <= Math.Min(_row + 1, NumRow - 1); rowIndex++)
             {
                 for (int columnIndex = Math.Max(_col - 1, 0); columnIndex <= Math.Min(_col + 1, NumCol - 1); columnIndex++)
                 {
-                    if (Cells[rowIndex, columnIndex].IsMine)
+                    if (game[rowIndex, columnIndex].IsMine)
                     {
-                        Cells[rowIndex, columnIndex].MinesAround++;
+                        game[_row, _col].MinesAround++;
                         //SetMinesAround(rowIndex, columnIndex);
                     }
                 }
@@ -92,15 +92,25 @@ namespace Minesweeper
             }
             
             if (Cells[row - 1, col - 1].MinesAround == 0)
-                PropagateVisibility(row, col);
+                PropagateReveal(Cells[row - 1, col - 1]);
 
-            Cells[row - 1, col - 1].Reveal(this);
+            //Cells[row - 1, col - 1].Reveal(this);
             return true;
         }
 
-        private void PropagateVisibility(int row, int col)
+        private void PropagateReveal(Cell cell)
         {
-            throw new NotImplementedException();
+            for (int rowIndex = Math.Max(cell._row - 1, 0); rowIndex <= Math.Min(cell._row + 1, NumRow - 1); rowIndex++)
+            {
+                for (int columnIndex = Math.Max(cell._col - 1, 0); columnIndex <= Math.Min(cell._col + 1, NumCol - 1); columnIndex++)
+                {
+                    if (Cells[rowIndex, columnIndex].MinesAround == 0)
+                    {
+                        Cells[rowIndex, columnIndex].Visibility = CellVisibility.Revealed;
+                        PropagateReveal(Cells[rowIndex, columnIndex]);
+                    }
+                }
+            }
         }
     }
 }

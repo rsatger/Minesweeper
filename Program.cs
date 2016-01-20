@@ -12,7 +12,7 @@ namespace Minesweeper
             var board = new Board();
             Draw(board);
 
-            while (!board.GameOver) //todo check number of cells left to reveal!
+            while (!board.GameOver && board.CellsRevealed < board.Dimension) //todo check number of cells left to reveal!
             {
                 var row = ReadRow();
                 var col = ReadColumn();
@@ -25,7 +25,9 @@ namespace Minesweeper
                 Console.WriteLine();
 
                 Draw(board);
+                Console.WriteLine(board.Dimension - board.CellsRevealed + " Cells before victory");
             }
+
 
             Console.WriteLine(board.GameOver ? "GameOver" : "You won !");
             Console.WriteLine("Press any key to exit");

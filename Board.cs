@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace Minesweeper
 {
@@ -9,11 +10,15 @@ namespace Minesweeper
 
         public readonly Cell[,] Cells;
         public bool GameOver; //todo
+        public int CellsRevealed;
+        public readonly int Dimension;
 
         public Board()
         {
             NumCol = 10;
             NumRow = 10;
+            CellsRevealed = 0;
+            Dimension = NumCol*NumRow; 
 
             Cells = InitializeGame(NumRow, NumCol);
         }
@@ -84,6 +89,7 @@ namespace Minesweeper
                 return false;
 
             Cells[row - 1, col - 1].Visibility = CellVisibility.Revealed;
+            CellsRevealed ++;
 
             if (Cells[row - 1, col - 1].IsMine)
             {
@@ -98,7 +104,7 @@ namespace Minesweeper
             return true;
         }
 
-        private void PropagateReveal(Cell cell)
+        private void PropagateReveal(Cell cell) 
         {
             for (int rowIndex = Math.Max(cell._row - 1, 0); rowIndex <= Math.Min(cell._row + 1, NumRow - 1); rowIndex++)
             {
@@ -109,6 +115,7 @@ namespace Minesweeper
                     {
                         Cells[rowIndex, columnIndex].Visibility = CellVisibility.Revealed;
                         PropagateReveal(Cells[rowIndex, columnIndex]);
+                        CellsRevealed ++;
                     }
                 }
             }

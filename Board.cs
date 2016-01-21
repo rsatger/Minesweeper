@@ -9,7 +9,7 @@ namespace Minesweeper
         public readonly int NumRow;
 
         public readonly Cell[,] Cells;
-        public bool GameOver; //todo
+        public bool GameOver; 
         public int CellsRevealed;
         public readonly int Dimension;
 
@@ -75,12 +75,10 @@ namespace Minesweeper
                     if (game[rowIndex, columnIndex].IsMine)
                     {
                         game[_row, _col].MinesAround++;
-                        //SetMinesAround(rowIndex, columnIndex);
                     }
                 }
             }
         }
-
         #endregion
 
         public bool TreatUserInput(int row, int col)
@@ -100,7 +98,6 @@ namespace Minesweeper
             if (Cells[row - 1, col - 1].MinesAround == 0)
                 PropagateReveal(Cells[row - 1, col - 1]);
 
-            //Cells[row - 1, col - 1].Reveal(this);
             return true;
         }
 

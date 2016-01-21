@@ -25,7 +25,7 @@ namespace Minesweeper
                 Console.WriteLine();
 
                 Draw(board);
-                Console.WriteLine(board.Dimension - board.CellsRevealed + " Cells before victory");
+                Console.WriteLine( board.GameOver ? "This is a mine..." : (board.Dimension - board.CellsRevealed + " Cells before victory"));
             }
 
 
@@ -92,7 +92,8 @@ namespace Minesweeper
                 Console.WriteLine();
             }
             Console.WriteLine();
-            //Console.WriteLine(cellsRevealed + " cells cleared");
+
+            
             Console.WriteLine();
         }
     }

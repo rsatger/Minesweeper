@@ -7,6 +7,8 @@ namespace Minesweeper
     {
         private static void Main(string[] args)
         {
+            var interactivity = new Interactivity();
+
             Console.WriteLine("Starting the game");
             Console.WriteLine(); 
             
@@ -15,8 +17,8 @@ namespace Minesweeper
 
             while (!board.GameOver && board.CellsRevealed < board.Dimension) 
             {
-                var row = ReadInput("row");
-                var col = ReadInput("column");
+                var row = interactivity.ReadInput("row");
+                var col = interactivity.ReadInput("column");
                 
                 Console.WriteLine();
                 
@@ -34,25 +36,6 @@ namespace Minesweeper
             Console.ReadKey();
         }
 
-        private static int ReadInput(string dim)
-        {
-            int dimNumber;
-            Console.Write("Enter " + dim + ": ");
-
-            if (!Int32.TryParse(Console.ReadLine(), out dimNumber))
-            {
-                Console.Write("Please enter an integer");
-                Console.WriteLine();          
-                return ReadInput(dim);
-            }
-            if (dimNumber < 0 || dimNumber > 10)
-            {
-                Console.Write("Entry out of range, enter a value corresonding to a " + dim + " number");
-                Console.WriteLine();          
-                return ReadInput(dim);
-            }
-            return dimNumber;
-        }
 
         public static void Draw(Board board)
         {

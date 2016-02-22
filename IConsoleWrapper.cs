@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Minesweeper
 {
@@ -34,6 +30,7 @@ namespace Minesweeper
             return null;
         }
     }
+
     public class SimulateOutOfRangeUserInput : IConsoleWrapper
     {
         public string ReadUserInput()
@@ -42,6 +39,3 @@ namespace Minesweeper
         }
     }
 }
-
-
-

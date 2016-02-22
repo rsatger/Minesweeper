@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Runtime.InteropServices;
+using System.Collections.Generic;
 
 namespace Minesweeper
 {
@@ -9,25 +9,31 @@ namespace Minesweeper
         public readonly int NumRow;
 
         public readonly Cell[,] Cells;
-        public bool GameOver; 
+        public bool GameOver;
         public int CellsRevealed;
         public readonly int Dimension;
+
+        public List<String> dimensionList = new List<string>
+                {
+                    "row", "col"
+                };
 
         public Board()
         {
             NumCol = 10;
             NumRow = 10;
             CellsRevealed = 0;
-            Dimension = NumCol*NumRow; 
+            Dimension = NumCol * NumRow;
 
             Cells = InitializeGame(NumRow, NumCol);
         }
 
         #region Initialize
+
         private Cell[,] InitializeGame(int maxRow, int maxCol)
         {
             var mines = InitializeMines(maxRow, maxCol);
-            
+
             var game = new Cell[maxRow, maxCol];
             for (int row = 0; row < maxRow; row++)
                 for (int col = 0; col < maxCol; col++)
@@ -59,7 +65,7 @@ namespace Minesweeper
         {
             for (int rowIndex = 0; rowIndex <= NumRow - 1; rowIndex++)
             {
-                for (int columnIndex = 0;columnIndex <= NumCol - 1; columnIndex++)
+                for (int columnIndex = 0; columnIndex <= NumCol - 1; columnIndex++)
                 {
                     SetMinesAround(rowIndex, columnIndex, game);
                 }
@@ -79,40 +85,40 @@ namespace Minesweeper
                 }
             }
         }
-        #endregion
+
+        #endregion Initialize
 
         public bool TreatUserInput(int row, int col)
         {
-            if (Cells[row - 1, col - 1].Visibility == CellVisibility.Revealed) 
+            if (Cells[row - 1, col - 1].Visibility == CellVisibility.Revealed)
                 return false;
 
             Cells[row - 1, col - 1].Visibility = CellVisibility.Revealed;
-            CellsRevealed ++;
+            CellsRevealed++;
 
             if (Cells[row - 1, col - 1].IsMine)
             {
                 GameOver = true;
                 return true;
             }
-            
+
             if (Cells[row - 1, col - 1].MinesAround == 0)
                 PropagateReveal(Cells[row - 1, col - 1]);
 
             return true;
         }
 
-        private void PropagateReveal(Cell cell) 
+        private void PropagateReveal(Cell cell)
         {
             for (int rowIndex = Math.Max(cell._row - 1, 0); rowIndex <= Math.Min(cell._row + 1, NumRow - 1); rowIndex++)
             {
                 for (int columnIndex = Math.Max(cell._col - 1, 0); columnIndex <= Math.Min(cell._col + 1, NumCol - 1); columnIndex++)
                 {
-                    
                     if (Cells[rowIndex, columnIndex].Visibility != CellVisibility.Revealed && Cells[rowIndex, columnIndex].MinesAround == 0)
                     {
                         Cells[rowIndex, columnIndex].Visibility = CellVisibility.Revealed;
                         PropagateReveal(Cells[rowIndex, columnIndex]);
-                        CellsRevealed ++;
+                        CellsRevealed++;
                     }
                 }
             }

@@ -1,41 +1,40 @@
 ﻿using System;
-using System.Runtime.Remoting;
 
 namespace Minesweeper
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        public static void Main(string[] args) // use to be private static void Main(string[] args)
         {
             var interactivity = new Interactivity();
 
             Console.WriteLine("Starting the game");
-            Console.WriteLine(); 
-            
+            Console.WriteLine();
+
+            //Dimension = new DimensionType();
+
             var board = new Board();
             Draw(board);
 
-            while (!board.GameOver && board.CellsRevealed < board.Dimension) 
+            while (!board.GameOver && board.CellsRevealed < board.Dimension)
             {
-                var row = interactivity.ReadInput("row");
-                var col = interactivity.ReadInput("column");
-                
+                interactivity.AskAndGetUserInput();
+
                 Console.WriteLine();
-                
-                if (!board.TreatUserInput(row, col))
+
+                if (!board.TreatUserInput(interactivity._rowInput, interactivity._colInput))
                     Console.WriteLine("This cell has already been cleared");
-                
+
                 Console.WriteLine();
 
                 Draw(board);
-                Console.WriteLine( board.GameOver ? "This is a mine..." : (board.Dimension - board.CellsRevealed + " Cells before victory"));
+                Console.WriteLine(board.GameOver ? "This is a mine..." : (board.Dimension - board.CellsRevealed + " Cells before victory"));
             }
 
             Console.WriteLine(board.GameOver ? "GameOver" : "You won !");
             Console.WriteLine("Press any key to exit");
             Console.ReadKey();
         }
-
 
         public static void Draw(Board board)
         {
@@ -68,7 +67,7 @@ namespace Minesweeper
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine();          
+            Console.WriteLine();
             Console.WriteLine();
         }
     }

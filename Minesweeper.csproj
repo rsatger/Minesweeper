@@ -50,6 +50,7 @@
     <Compile Include="Cell.cs" />
     <Compile Include="CellStates.cs" />
     <Compile Include="Board.cs" />
+    <Compile Include="DimensionType.cs" />
     <Compile Include="IConsoleWrapper.cs" />
     <Compile Include="Interactivity.cs" />
     <Compile Include="Program.cs" />

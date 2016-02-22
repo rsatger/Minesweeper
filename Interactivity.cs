@@ -1,27 +1,46 @@
 ﻿using System;
+using System.Runtime.InteropServices;
 
 namespace Minesweeper
 {
     public class Interactivity
-    {
-        public int ReadInput(string dim)
+    {        
+        //, IConsoleWrapper console
+        public bool ReadInput(string dim, var userInput )
         {
-            int dimNumber;
+            int dimNumber = 0;
+
+            ConsoleWrapper console = new ConsoleWrapper();
+
+            //testing 
+            //SimulateNonIntegerUserInput console = new SimulateNonIntegerUserInput();
+            
             Console.Write("Enter " + dim + ": ");
 
-            if (!Int32.TryParse(Console.ReadLine(), out dimNumber))
+            userInput = console.ReadUserInput();
+
+            while(!CheckTypeIsInteger(userInput, dimNumber)) // must probably be passed by reference
             {
-                Console.Write("Please enter an integer");
-                Console.WriteLine();
-                return ReadInput(dim);
-            }
-            if (dimNumber < 0 || dimNumber > 10)
-            {
-                Console.Write("Entry out of range, enter a value corresonding to a " + dim + " number");
-                Console.WriteLine();
-                return ReadInput(dim);
+                Console.WriteLine("Please enter an integer");
+                return false;
             }
             return dimNumber;
         }
+
+        public bool CheckTypeIsInteger(string userInput, int dimNumber) // passage par ref
+        {
+            if (!Int32.TryParse(userInput, out dimNumber))
+            {
+                Console.WriteLine("Please enter an integer");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
     }
+
+    
 }
+

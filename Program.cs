@@ -11,14 +11,12 @@ namespace Minesweeper
             Console.WriteLine("Starting the game");
             Console.WriteLine();
 
-            //Dimension = new DimensionType();
-
             var board = new Board();
             Draw(board);
 
             while (!board.GameOver && board.CellsRevealed < board.Dimension)
             {
-                interactivity.AskAndGetUserInput();
+                interactivity.GetUserCellInput();
 
                 Console.WriteLine();
 

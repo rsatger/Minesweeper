@@ -10,7 +10,7 @@ namespace Minesweeper
 
         public DimensionType Dimension { get; set; }
 
-        public void AskAndGetUserInput()
+        public void GetUserCellInput()
         {
             bool checkRowInput = false;
             bool checkColInput = false;
@@ -35,9 +35,6 @@ namespace Minesweeper
             string input;
             ConsoleWrapper console = new ConsoleWrapper();
 
-            //testing
-            //SimulateNonIntegerUserInput console = new SimulateNonIntegerUserInput();
-
             Console.Write("Enter " + dimension + ": ");
 
             input = console.ReadUserInput();
@@ -51,7 +48,7 @@ namespace Minesweeper
             else return false;
         }
 
-        public bool CheckTypeIsInteger(string userInput) // passage par ref
+        public bool CheckTypeIsInteger(string userInput)
         {
             if (!Int32.TryParse(userInput, out _intUserInput))
             {
@@ -70,27 +67,5 @@ namespace Minesweeper
             }
             else return true;
         }
-
-        ////, IConsoleWrapper console
-        //public bool ReadInput(string dim, var userInput)
-        //{
-        //    int dimNumber = 0;
-
-        //    ConsoleWrapper console = new ConsoleWrapper();
-
-        //    //testing
-        //    //SimulateNonIntegerUserInput console = new SimulateNonIntegerUserInput();
-
-        //    Console.Write("Enter " + dim + ": ");
-
-        //    userInput = console.ReadUserInput();
-
-        //    while (!CheckTypeIsInteger(userInput, dimNumber)) // must probably be passed by reference
-        //    {
-        //        Console.WriteLine("Please enter an integer");
-        //        return false;
-        //    }
-        //    return dimNumber;
-        //}
     }
 }

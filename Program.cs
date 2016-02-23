@@ -1,57 +1,32 @@
 ﻿using System;
-using System.Runtime.Remoting;
 
 namespace Minesweeper
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        public static void Main(string[] args) // use to be private static void Main(string[] args)
         {
-            Console.WriteLine("Starting the game");
-            Console.WriteLine(); 
+            var com = new Communicator();
+            var interact = new Interactivity(com);
+
+            com.Write("Starting the game" + Environment.NewLine);
             
-            var board = new Board();
+            var board = new Board(com);
             Draw(board);
 
-            while (!board.GameOver && board.CellsRevealed < board.Dimension) 
+            while (!board.GameOver && board.CellsRevealed < board.Dimension)
             {
-                var row = ReadInput("row");
-                var col = ReadInput("column");
-                
-                Console.WriteLine();
-                
-                if (!board.TreatUserInput(row, col))
-                    Console.WriteLine("This cell has already been cleared");
-                
+                board.PlayCell(interact.GetValidIndex(DimensionType.Row), interact.GetValidIndex(DimensionType.Column));
+
                 Console.WriteLine();
 
                 Draw(board);
-                Console.WriteLine( board.GameOver ? "This is a mine..." : (board.Dimension - board.CellsRevealed + " Cells before victory"));
+                Console.WriteLine(board.GameOver ? "This is a mine..." : (board.Dimension - board.CellsRevealed + " Cells before victory"));
             }
 
             Console.WriteLine(board.GameOver ? "GameOver" : "You won !");
             Console.WriteLine("Press any key to exit");
             Console.ReadKey();
-        }
-
-        private static int ReadInput(string dim)
-        {
-            int dimNumber;
-            Console.Write("Enter " + dim + ": ");
-
-            if (!Int32.TryParse(Console.ReadLine(), out dimNumber))
-            {
-                Console.Write("Please enter an integer");
-                Console.WriteLine();          
-                return ReadInput(dim);
-            }
-            if (dimNumber < 0 || dimNumber > 10)
-            {
-                Console.Write("Entry out of range, enter a value corresonding to a " + dim + " number");
-                Console.WriteLine();          
-                return ReadInput(dim);
-            }
-            return dimNumber;
         }
 
         public static void Draw(Board board)
@@ -85,7 +60,7 @@ namespace Minesweeper
                 }
                 Console.WriteLine();
             }
-            Console.WriteLine();          
+            Console.WriteLine();
             Console.WriteLine();
         }
     }

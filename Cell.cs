@@ -1,5 +1,3 @@
-using System;
-
 namespace Minesweeper
 {
     public class Cell
@@ -19,7 +17,5 @@ namespace Minesweeper
             Visibility = CellVisibility.Hidden;
             IsMine = isMine;
         }
-
-
     }
 }

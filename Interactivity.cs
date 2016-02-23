@@ -4,55 +4,40 @@ namespace Minesweeper
 {
     public class Interactivity
     {
-        private int _intUserInput = 0;
-        internal int _rowInput = 0;
-        internal int _colInput = 0;
-
-        public DimensionType Dimension { get; set; }
-
-        public void GetUserCellInput()
+        private readonly ICommunicator _communicator;
+        
+        public  Interactivity(ICommunicator com)
         {
-            bool checkRowInput = false;
-            bool checkColInput = false;
-
-            Dimension = DimensionType.Row;
-            while (!checkRowInput)
+            _communicator = com;
+        }
+        
+        public int GetValidIndex(DimensionType dimension)
+        {
+            var isValidBoundaries = false;
+            var isValidInteger = false;
+            var index = int.MinValue;
+           
+            while(!isValidBoundaries && !isValidInteger)
             {
-                checkRowInput = GetUserInput(Dimension);
-                _rowInput = _intUserInput;
+                _communicator.Write(string.Format("{1}Enter {0}: ", dimension, Environment.NewLine));
+                var input = _communicator.Read();
+
+                isValidInteger = CheckTypeIsInteger(input, out index);
+                if (isValidInteger)
+                {
+                    isValidBoundaries = CheckBoundaries(index, dimension);
+                }
             }
 
-            Dimension = DimensionType.Column;
-            while (!checkColInput)
-            {
-                checkColInput = GetUserInput(Dimension);
-                _colInput = _intUserInput;
-            }
+            return index;
         }
 
-        public bool GetUserInput(DimensionType dimension)
+        public bool CheckTypeIsInteger(string userInput, out int index)
         {
-            string input;
-            ConsoleWrapper console = new ConsoleWrapper();
-
-            Console.Write("Enter " + dimension + ": ");
-
-            input = console.ReadUserInput();
-
-            bool result = CheckTypeIsInteger(input);
-
-            if (result)
+            if (userInput == null || !int.TryParse(userInput, out index))
             {
-                return CheckBoundaries(_intUserInput, dimension);
-            }
-            else return false;
-        }
-
-        public bool CheckTypeIsInteger(string userInput)
-        {
-            if (!Int32.TryParse(userInput, out _intUserInput))
-            {
-                Console.WriteLine("Please enter an integer");
+                _communicator.Write(MessageResources.CheckIntegerError);
+                index = -1;
                 return false;
             }
             else return true;
@@ -62,7 +47,7 @@ namespace Minesweeper
         {
             if (input <= 0 || input > 10)
             {
-                Console.WriteLine("Entry out of range, enter a value corresonding to a " + dimension + " number");
+                _communicator.Write(string.Format(MessageResources.CheckBoundariesError, dimension));
                 return false;
             }
             else return true;

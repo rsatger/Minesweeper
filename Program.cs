@@ -6,22 +6,17 @@ namespace Minesweeper
     {
         public static void Main(string[] args) // use to be private static void Main(string[] args)
         {
-            var interactivity = new Interactivity();
+            var com = new Communicator();
+            var interact = new Interactivity(com);
 
-            Console.WriteLine("Starting the game");
-            Console.WriteLine();
-
-            var board = new Board();
+            com.Write("Starting the game" + Environment.NewLine);
+            
+            var board = new Board(com);
             Draw(board);
 
             while (!board.GameOver && board.CellsRevealed < board.Dimension)
             {
-                interactivity.GetUserCellInput();
-
-                Console.WriteLine();
-
-                if (!board.TreatUserInput(interactivity._rowInput, interactivity._colInput))
-                    Console.WriteLine("This cell has already been cleared");
+                board.PlayCell(interact.GetValidIndex(DimensionType.Row), interact.GetValidIndex(DimensionType.Column));
 
                 Console.WriteLine();
 

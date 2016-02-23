@@ -12,18 +12,20 @@ namespace Minesweeper
         public bool GameOver;
         public int CellsRevealed;
         public readonly int Dimension;
+        private ICommunicator communicator;
 
         public List<String> dimensionList = new List<string>
                 {
                     "row", "col"
                 };
 
-        public Board()
+        public Board(ICommunicator commu)
         {
             NumCol = 10;
             NumRow = 10;
             CellsRevealed = 0;
             Dimension = NumCol * NumRow;
+            this.communicator = commu;
 
             Cells = InitializeGame(NumRow, NumCol);
         }
@@ -88,10 +90,13 @@ namespace Minesweeper
 
         #endregion Initialize
 
-        public bool TreatUserInput(int row, int col)
+        public void PlayCell(int row, int col)
         {
             if (Cells[row - 1, col - 1].Visibility == CellVisibility.Revealed)
-                return false;
+            {
+                communicator.Write("This cell has already been cleared");
+                return;
+            }
 
             Cells[row - 1, col - 1].Visibility = CellVisibility.Revealed;
             CellsRevealed++;
@@ -99,13 +104,13 @@ namespace Minesweeper
             if (Cells[row - 1, col - 1].IsMine)
             {
                 GameOver = true;
-                return true;
+                
             }
 
             if (Cells[row - 1, col - 1].MinesAround == 0)
                 PropagateReveal(Cells[row - 1, col - 1]);
 
-            return true;
+            
         }
 
         private void PropagateReveal(Cell cell)

@@ -54,6 +54,7 @@
     <Compile Include="Enum\DimensionType.cs" />
     <Compile Include="ICommunicator.cs" />
     <Compile Include="Interactivity.cs" />
+    <Compile Include="MessageResources.Designer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tests\CommunicatorTest.cs" />
@@ -66,7 +67,9 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="MessageResources.resx" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

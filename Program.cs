@@ -7,12 +7,15 @@ namespace Minesweeper
         public static void Main(string[] args) // use to be private static void Main(string[] args)
         {
             var com = new Communicator();
-            var interact = new Interactivity(com);
+            var log = new Log();
+            var interact = new Interactivity(com, log);
 
             com.Write("Starting the game" + Environment.NewLine);
             
             var board = new Board(com);
             Draw(board);
+
+
 
             while (!board.GameOver && board.CellsRevealed < board.Dimension)
             {

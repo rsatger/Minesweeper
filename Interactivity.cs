@@ -5,10 +5,13 @@ namespace Minesweeper
     public class Interactivity
     {
         private readonly ICommunicator _communicator;
-        
-        public  Interactivity(ICommunicator com)
+        private readonly Log _log;
+
+
+        public  Interactivity(ICommunicator com, Log log)
         {
             _communicator = com;
+            _log = log;
         }
         
         public int GetValidIndex(DimensionType dimension)
@@ -20,6 +23,7 @@ namespace Minesweeper
             while(!isValidBoundaries && !isValidInteger)
             {
                 _communicator.Write(string.Format("{1}Enter {0}: ", dimension, Environment.NewLine));
+                _log.
                 var input = _communicator.Read();
 
                 isValidInteger = CheckTypeIsInteger(input, out index);
@@ -37,6 +41,7 @@ namespace Minesweeper
             if (userInput == null || !int.TryParse(userInput, out index))
             {
                 _communicator.Write(MessageResources.CheckIntegerError);
+
                 index = -1;
                 return false;
             }

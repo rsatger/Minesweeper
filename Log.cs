@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -11,19 +12,48 @@ namespace Minesweeper
     public class Log
     {
         private int _currentLogId;
-        private string user;
-        public string UserNameType { get; set; }
+        private string _user;
+        //public string UserNameType { get; set; }
 
         public Log()
         {
             SetLogId();
-    
+            SetUser();  
+
         }
+
 
         public void SetLogId()
         {
+            const string minesweeperDBString =
+                @"server = .\SQLEXPRESS; database = minesweeperDB; integrated security = SSPI";
             // get max logId and increment
+            string queryString =
+                "select MAX(log_id)from logs_reads_and_writes";
 
+            using (SqlConnection connection = new SqlConnection(minesweeperDBString))
+            {
+                connection.Open();
+
+                using (SqlCommand command = new SqlCommand(queryString, connection))
+                {
+                    DataTable dataTable = new DataTable();
+                    
+                    using (SqlDataAdapter a = new SqlDataAdapter(command))
+                    {
+                        a.Fill(dataTable);
+                    }
+                    DataRow dataRow = dataTable.Rows[0];
+                    _currentLogId = (int)dataRow[0];
+                }
+
+            }
+        }
+
+
+        private void SetUser()
+        {
+            _user = System.Environment.UserName;
         }
 
         public void WriteInLog(string content, int type)
@@ -36,13 +66,8 @@ namespace Minesweeper
 
         public static void WriteLog(string connectionString, string logContent, int type)
         {
-            //string queryString =
-            //  "select MAX(log_id)from logs_reads_and_writes";
-
             string queryString =
-                "INSERT INTO logs_reads_and_writes (log_id, UTC_timestamp, user_name, content, message_type_id) VALUES (3, CURRENT_TIMESTAMP, 'bernard', @message, @type);";
-
-            //DataTable dataTable = new DataTable();
+                "INSERT INTO logs_reads_and_writes (log_id, UTC_timestamp, user_name, content, message_type_id) VALUES (3, CURRENT_TIMESTAMP, 'jean michel', @message, @type);";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {

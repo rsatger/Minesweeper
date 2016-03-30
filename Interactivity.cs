@@ -23,8 +23,9 @@ namespace Minesweeper
             while(!isValidBoundaries && !isValidInteger)
             {
                 _communicator.Write(string.Format("{1}Enter {0}: ", dimension, Environment.NewLine));
-                _log.
                 var input = _communicator.Read();
+
+                _log.WriteInLog(string.Format("{1}Enter {0}: ", dimension, Environment.NewLine), 2);
 
                 isValidInteger = CheckTypeIsInteger(input, out index);
                 if (isValidInteger)
@@ -41,6 +42,7 @@ namespace Minesweeper
             if (userInput == null || !int.TryParse(userInput, out index))
             {
                 _communicator.Write(MessageResources.CheckIntegerError);
+                _log.WriteInLog(MessageResources.CheckIntegerError, 2);
 
                 index = -1;
                 return false;
@@ -53,6 +55,7 @@ namespace Minesweeper
             if (input <= 0 || input > 10)
             {
                 _communicator.Write(string.Format(MessageResources.CheckBoundariesError, dimension));
+                _log.WriteInLog(MessageResources.CheckBoundariesError, 2);
                 return false;
             }
             else return true;

@@ -61,6 +61,15 @@ namespace Minesweeper {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to This cell has already been cleared.
+        /// </summary>
+        public static string CellCleared {
+            get {
+                return ResourceManager.GetString("CellCleared", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  Cells before victory.
         /// </summary>
         public static string CellsBeforeVictory {

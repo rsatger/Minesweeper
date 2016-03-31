@@ -6,13 +6,13 @@ namespace Minesweeper
     {
         public static void Main(string[] args) // use to be private static void Main(string[] args)
         {
-            var com = new Communicator();
+            
             var log = new Log();
+            var com = new Communicator();
             var interact = new Interactivity(com, log);
 
-            com.Write(MessageResources.GameStart + Environment.NewLine);
-            log.WriteInLog(MessageResources.GameStart, 2);
-
+            com.Write(MessageResources.GameStart + Environment.NewLine, log);
+            
             var board = new Board(com);
             Draw(board);
 
@@ -20,15 +20,15 @@ namespace Minesweeper
             {
                 board.PlayCell(interact.GetValidIndex(DimensionType.Row), interact.GetValidIndex(DimensionType.Column));
 
-                Console.WriteLine();
+                //Console.WriteLine();
 
                 Draw(board);
-                Console.WriteLine(board.GameOver ? MessageResources.ThisIsMine : (board.Dimension - board.CellsRevealed + MessageResources.CellsBeforeVictory));
-            } 
+                com.Write(board.GameOver ? MessageResources.ThisIsMine : (board.Dimension - board.CellsRevealed + MessageResources.CellsBeforeVictory), log);
+            }
 
-            Console.WriteLine(board.GameOver ? MessageResources.GameOver : MessageResources.YouWon);
-            Console.WriteLine(MessageResources.PressKeyExit);
-            Console.ReadKey();
+            com.Write(board.GameOver ? MessageResources.GameOver : MessageResources.YouWon, log);
+            com.Write(MessageResources.PressKeyExit, log);
+            com.Read(log);
         }
 
         public static void Draw(Board board)

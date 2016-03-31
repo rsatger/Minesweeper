@@ -94,7 +94,7 @@ namespace Minesweeper
         {
             if (Cells[row - 1, col - 1].Visibility == CellVisibility.Revealed)
             {
-                communicator.Write("This cell has already been cleared");
+                //communicator.Write(MessageResources.CellCleared);
                 return;
             }
 

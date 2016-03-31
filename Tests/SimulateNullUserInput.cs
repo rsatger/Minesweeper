@@ -1,15 +1,15 @@
-﻿namespace Minesweeper
-{
-    public class SimulateNullUserInput : ICommunicator
-    {
-        public string Read()
-        {
-            return null;
-        }
+﻿//namespace Minesweeper
+//{
+//    public class SimulateNullUserInput : ICommunicator
+//    {
+//        public string Read()
+//        {
+//            return null;
+//        }
 
-        public void Write(string message)
-        {
+//        public void Write(string message)
+//        {
             
-        }
-    }
-}
+//        }
+//    }
+//}

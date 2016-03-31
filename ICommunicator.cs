@@ -2,7 +2,7 @@
 {
     public interface ICommunicator
     {
-        string Read();
-        void Write(string message);
+        string Read(Log log);
+        void Write(string message, Log log);
     }
 }

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Data;
 using System.Data.SqlClient;
 
 namespace Minesweeper
@@ -15,14 +9,11 @@ namespace Minesweeper
         private string _user;
         //public string UserNameType { get; set; }
 
-        
         public Log()
         {
             SetLogId();
-            SetUser();  
-
+            SetUser();
         }
-
 
         public void SetLogId()
         {
@@ -39,7 +30,7 @@ namespace Minesweeper
                 using (SqlCommand command = new SqlCommand(queryString, connection))
                 {
                     DataTable dataTable = new DataTable();
-                    
+
                     using (SqlDataAdapter a = new SqlDataAdapter(command))
                     {
                         a.Fill(dataTable);
@@ -48,10 +39,8 @@ namespace Minesweeper
                     int previousLogId = (int)dataRow[0];
                     _logId = previousLogId + 1;
                 }
-
             }
         }
-
 
         private void SetUser()
         {
@@ -82,7 +71,6 @@ namespace Minesweeper
                     command.Parameters.AddWithValue("@message", logContent);
                     command.Parameters.AddWithValue("@type", type);
 
-
                     command.ExecuteNonQuery();
 
                     //using (SqlDataAdapter a = new SqlDataAdapter(command))
@@ -90,10 +78,9 @@ namespace Minesweeper
                     //    a.Fill(dataTable);
                     //}
                 }
+                connection.Close();
             }
             //return broot
         }
-
-
     }
 }

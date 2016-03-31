@@ -22,7 +22,7 @@ namespace Minesweeper
            
             while(!isValidBoundaries && !isValidInteger)
             {
-                _communicator.Write(string.Format(MessageResources.EnterInput, dimension, Environment.NewLine), _log);
+                _communicator.Write(string.Format(MessageResources.EnterInput, dimension), _log);
                 var input = _communicator.Read(_log);
 
                 //_log.WriteInLog(string.Format("{1}Enter {0}: ", dimension, Environment.NewLine), 2);

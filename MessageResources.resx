@@ -130,7 +130,7 @@
     <value>Please enter an integer</value>
   </data>
   <data name="EnterInput" xml:space="preserve">
-    <value>{1}Enter {0}:</value>
+    <value>Enter {0}:</value>
   </data>
   <data name="GameOver" xml:space="preserve">
     <value>Game Over</value>

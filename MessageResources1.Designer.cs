@@ -97,7 +97,7 @@ namespace Minesweeper {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {1}Enter {0}:.
+        ///   Looks up a localized string similar to Enter {0}:.
         /// </summary>
         public static string EnterInput {
             get {

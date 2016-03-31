@@ -8,7 +8,6 @@ namespace Minesweeper
 
         public string Read(Log log)
         {
-            
             var input = Console.ReadLine();
             log.WriteInLog(input, 1);
             return input;
@@ -19,7 +18,5 @@ namespace Minesweeper
             log.WriteInLog(message, 2);
             Console.WriteLine(message);
         }
-
-
     }
 }

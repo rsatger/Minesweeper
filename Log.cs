@@ -15,6 +15,7 @@ namespace Minesweeper
         private string _user;
         //public string UserNameType { get; set; }
 
+        
         public Log()
         {
             SetLogId();

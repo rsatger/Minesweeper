@@ -61,6 +61,15 @@ namespace Minesweeper {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  Cells before victory.
+        /// </summary>
+        public static string CellsBeforeVictory {
+            get {
+                return ResourceManager.GetString("CellsBeforeVictory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Entry out of range, enter a value corresonding to a {0} number.
         /// </summary>
         public static string CheckBoundariesError {
@@ -79,11 +88,56 @@ namespace Minesweeper {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to .
+        ///   Looks up a localized string similar to {1}Enter {0}:.
+        /// </summary>
+        public static string EnterInput {
+            get {
+                return ResourceManager.GetString("EnterInput", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Game Over.
+        /// </summary>
+        public static string GameOver {
+            get {
+                return ResourceManager.GetString("GameOver", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Starting the game.
         /// </summary>
         public static string GameStart {
             get {
                 return ResourceManager.GetString("GameStart", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Press any key to exit.
+        /// </summary>
+        public static string PressKeyExit {
+            get {
+                return ResourceManager.GetString("PressKeyExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to This is a mine.
+        /// </summary>
+        public static string ThisIsMine {
+            get {
+                return ResourceManager.GetString("ThisIsMine", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You won !.
+        /// </summary>
+        public static string YouWon {
+            get {
+                return ResourceManager.GetString("YouWon", resourceCulture);
             }
         }
     }

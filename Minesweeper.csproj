@@ -55,7 +55,6 @@
     <Compile Include="ICommunicator.cs" />
     <Compile Include="Interactivity.cs" />
     <Compile Include="Log.cs" />
-    <Compile Include="MessageResources.Designer.cs" />
     <Compile Include="MessageResources1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

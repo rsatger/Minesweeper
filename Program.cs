@@ -10,12 +10,13 @@ namespace Minesweeper
             var log = new Log();
             var interact = new Interactivity(com, log);
 
-            com.Write("Starting the game" + Environment.NewLine);
-            
+            //string writeContent = "Starting the game" + Environment.NewLine;
+
+            com.Write(MessageResources.);
+            log.WriteInLog(writeContent, 2);
+
             var board = new Board(com);
             Draw(board);
-
-
 
             while (!board.GameOver && board.CellsRevealed < board.Dimension)
             {
@@ -25,7 +26,7 @@ namespace Minesweeper
 
                 Draw(board);
                 Console.WriteLine(board.GameOver ? "This is a mine..." : (board.Dimension - board.CellsRevealed + " Cells before victory"));
-            }
+            } 
 
             Console.WriteLine(board.GameOver ? "GameOver" : "You won !");
             Console.WriteLine("Press any key to exit");

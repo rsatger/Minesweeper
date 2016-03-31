@@ -123,4 +123,7 @@
   <data name="CheckIntegerError" xml:space="preserve">
     <value>Please enter an integer</value>
   </data>
+  <data name="GameStart" xml:space="preserve">
+    <value />
+  </data>
 </root>

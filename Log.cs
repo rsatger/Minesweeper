@@ -11,7 +11,7 @@ namespace Minesweeper
 {
     public class Log
     {
-        private int _currentLogId;
+        private int _logId;
         private string _user;
         //public string UserNameType { get; set; }
 
@@ -44,7 +44,8 @@ namespace Minesweeper
                         a.Fill(dataTable);
                     }
                     DataRow dataRow = dataTable.Rows[0];
-                    _currentLogId = (int)dataRow[0];
+                    int previousLogId = (int)dataRow[0];
+                    _logId = previousLogId + 1;
                 }
 
             }
@@ -60,14 +61,14 @@ namespace Minesweeper
         {
             const string minesweeperDBString =
                 @"server = .\SQLEXPRESS; database = minesweeperDB; integrated security = SSPI";
-            const string logContent = "this is a log testing";
-            WriteLog(minesweeperDBString, logContent, 1);
+            //const string logContent = "this is a log testing";
+            WriteLog(minesweeperDBString, content, type);
         }
 
-        public static void WriteLog(string connectionString, string logContent, int type)
+        public void WriteLog(string connectionString, string logContent, int type)
         {
             string queryString =
-                "INSERT INTO logs_reads_and_writes (log_id, UTC_timestamp, user_name, content, message_type_id) VALUES (3, CURRENT_TIMESTAMP, 'jean michel', @message, @type);";
+                "INSERT INTO logs_reads_and_writes (log_id, UTC_timestamp, user_name, content, message_type_id) VALUES (@logId, CURRENT_TIMESTAMP, @user, @message, @type);";
 
             using (SqlConnection connection = new SqlConnection(connectionString))
             {
@@ -75,8 +76,11 @@ namespace Minesweeper
 
                 using (SqlCommand command = new SqlCommand(queryString, connection))
                 {
+                    command.Parameters.AddWithValue("@logId", _logId);
+                    command.Parameters.AddWithValue("@user", _user);
                     command.Parameters.AddWithValue("@message", logContent);
                     command.Parameters.AddWithValue("@type", type);
+
 
                     command.ExecuteNonQuery();
 

@@ -41,7 +41,7 @@ namespace Minesweeper
         {
             if (userInput == null || !int.TryParse(userInput, out index))
             {
-                _communicator.Write(MessageResources.CheckIntegerError);
+                _communicator.Write(MessageResources.);
                 _log.WriteInLog(MessageResources.CheckIntegerError, 2);
 
                 index = -1;

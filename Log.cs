@@ -36,8 +36,13 @@ namespace Minesweeper
                         a.Fill(dataTable);
                     }
                     DataRow dataRow = dataTable.Rows[0];
-                    int previousLogId = (int)dataRow[0];
-                    _logId = previousLogId + 1;
+                    
+                    if (dataRow.IsNull(0)) _logId = 0;
+                    else
+                    {
+                        int previousLogId = (int)dataRow[0];
+                        _logId = previousLogId + 1;
+                    }
                 }
             }
         }

@@ -48,6 +48,7 @@ namespace Minesweeper.Logs
                     command.ExecuteNonQuery();
                 }
                 connection.Close();
+                connection.Dispose();
             }
         }
 

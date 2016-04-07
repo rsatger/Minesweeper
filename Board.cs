@@ -53,6 +53,8 @@ namespace Minesweeper
         private static bool[,] InitializeMines(int maxRow, int maxCol)
         {
             var mines = new bool[maxRow, maxCol];
+            var minesConfig = "(3,1)(1,2)";
+            var minesConfig2 = "3,1|1,2";
             mines[3, 1] = true;
             mines[1, 2] = true;
             mines[6, 2] = true;

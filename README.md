@@ -63,3 +63,47 @@ reveal soit un method d Cell
 
 //step 3: any diff mechanism for GameOver
 
+
+
+---
+
+
+
+USE master ;
+
+EXEC sp_databases
+
+CREATE DATABASE minesweeperDB 
+
+EXEC sp_databases
+
+USE minesweeperDB;
+
+ALTER AUTHORIZATION ON DATABASE::minesweeperDB
+to sa
+
+
+CREATE TABLE message_type
+(
+ type_id int PRIMARY KEY,
+ type varchar(15)
+);
+
+CREATE TABLE logs_reads_and_writes
+(line_id int IDENTITY(1,1) PRIMARY KEY,
+ UTC_timestamp datetime,
+ log_id int,
+ user_name varchar(15),
+ content varchar(100),
+ message_type_id int FOREIGN KEY REFERENCES message_type(type_id)
+);
+
+
+
+--DROP DATABASE minesweeper;
+
+-- if ever need to replace username prefix with "dbo"
+-- ALTER SCHEMA dbo TRANSFER rsatger.tablename;
+
+--drop table logs_reads_and_writes;
+

@@ -1,4 +1,5 @@
 ﻿using System;
+using Minesweeper.Logs;
 
 namespace Minesweeper
 {
@@ -6,29 +7,27 @@ namespace Minesweeper
     {
         public static void Main(string[] args) // use to be private static void Main(string[] args)
         {
-            
-            var log = new Log();
             var com = new Communicator();
-            var interact = new Interactivity(com, log);
+            var interact = new Interactivity(com);
 
-            com.Write(MessageResources.GameStart + Environment.NewLine, log);
+            com.WriteLine(MessageResources.GameStart + Environment.NewLine);
             
             var board = new Board(com);
             Draw(board);
 
-            while (!board.GameOver && board.CellsRevealed < board.Dimension)
+            while (!board.GameOver && board.CellsRevealed < board.TotalCellCount)
             {
                 board.PlayCell(interact.GetValidIndex(DimensionType.Row), interact.GetValidIndex(DimensionType.Column));
 
                 //Console.WriteLine();
 
                 Draw(board);
-                com.Write(board.GameOver ? MessageResources.ThisIsMine : (board.Dimension - board.CellsRevealed + MessageResources.CellsBeforeVictory), log);
+                com.WriteLine(board.GameOver ? MessageResources.ThisIsMine : (board.TotalCellCount - board.CellsRevealed + MessageResources.CellsBeforeVictory));
             }
 
-            com.Write(board.GameOver ? MessageResources.GameOver : MessageResources.YouWon, log);
-            com.Write(MessageResources.PressKeyExit, log);
-            com.Read(log);
+            com.WriteLine(board.GameOver ? MessageResources.GameOver : MessageResources.YouWon);
+            com.WriteLine(MessageResources.PressKeyExit);
+            com.Read();
         }
 
         public static void Draw(Board board)

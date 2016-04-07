@@ -1,17 +1,16 @@
 ﻿using System;
+using Minesweeper.Logs;
 
 namespace Minesweeper
 {
     public class Interactivity
     {
         private readonly ICommunicator _communicator;
-        private readonly Log _log;
+        
 
-
-        public  Interactivity(ICommunicator com, Log log)
+        public  Interactivity(ICommunicator com)
         {
             _communicator = com;
-            _log = log;
         }
         
         public int GetValidIndex(DimensionType dimension)
@@ -20,12 +19,10 @@ namespace Minesweeper
             var isValidInteger = false;
             var index = int.MinValue;
            
-            while(!isValidBoundaries && !isValidInteger)
+            while(!isValidBoundaries || !isValidInteger)
             {
-                _communicator.Write(string.Format(MessageResources.EnterInput, dimension), _log);
-                var input = _communicator.Read(_log);
-
-                //_log.WriteInLog(string.Format("{1}Enter {0}: ", dimension, Environment.NewLine), 2);
+                _communicator.Write(string.Format(MessageResources.EnterInput, dimension));
+                var input = _communicator.Read();
 
                 isValidInteger = CheckTypeIsInteger(input, out index);
                 if (isValidInteger)
@@ -41,8 +38,8 @@ namespace Minesweeper
         {
             if (userInput == null || !int.TryParse(userInput, out index))
             {
-                _communicator.Write(MessageResources.CheckIntegerError, _log);
-                _log.WriteInLog(MessageResources.CheckIntegerError, 2);
+                _communicator.WriteLine(MessageResources.CheckIntegerError);
+                
 
                 index = -1;
                 return false;
@@ -54,8 +51,8 @@ namespace Minesweeper
         {
             if (input <= 0 || input > 10)
             {
-                _communicator.Write(string.Format(MessageResources.CheckBoundariesError, dimension), _log);
-                _log.WriteInLog(MessageResources.CheckBoundariesError, 2);
+                _communicator.WriteLine(string.Format(MessageResources.CheckBoundariesError, dimension));
+                
                 return false;
             }
             else return true;

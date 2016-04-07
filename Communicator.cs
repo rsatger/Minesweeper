@@ -1,22 +1,34 @@
 ﻿using System;
+using Minesweeper.Logs;
 
 namespace Minesweeper
 {
     public class Communicator : ICommunicator
     {
-        public Log log;
+        private readonly Log _log;
 
-        public string Read(Log log)
+        public Communicator()
+        {
+            _log = new Log();
+        }
+
+        public string Read()
         {
             var input = Console.ReadLine();
-            log.WriteInLog(input, 1);
+            _log.WriteInLog(input, 1);
             return input;
         }
 
-        public void Write(string message, Log log)
+        public void WriteLine(string message)
         {
-            log.WriteInLog(message, 2);
+            _log.WriteInLog(message, 2);
             Console.WriteLine(message);
+        }
+        
+        public void Write(string message)
+        {
+            _log.WriteInLog(message, 2);
+            Console.Write(message);
         }
     }
 }

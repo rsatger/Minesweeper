@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 
 namespace Minesweeper
 {
@@ -11,6 +12,7 @@ namespace Minesweeper
         public readonly Cell[,] Cells;
         public bool GameOver;
         public int CellsRevealed;
+        public readonly int TotalCellCount;
         public readonly int Dimension;
         private ICommunicator communicator;
 
@@ -21,10 +23,11 @@ namespace Minesweeper
 
         public Board(ICommunicator commu)
         {
-            NumCol = 10;
-            NumRow = 10;
+            Dimension = Int32.Parse(ConfigurationManager.AppSettings["Dimension"]);
+            NumCol = Dimension;
+            NumRow = Dimension;
             CellsRevealed = 0;
-            Dimension = NumCol * NumRow;
+            TotalCellCount = NumCol * NumRow;
             this.communicator = commu;
 
             Cells = InitializeGame(NumRow, NumCol);
